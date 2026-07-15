@@ -15,11 +15,7 @@ export function requireAuth(req: AuthenticatedRequest, res: Response, next: Next
   }
 
   try {
-    const secret = process.env.SESSION_SECRET;
-    if (!secret) {
-      console.error("SESSION_SECRET environment variable is not configured");
-      return res.status(500).json({ error: "Internal server configuration error" });
-    }
+    const secret = "uttarakhand_gis_portal_secure_jwt_secret_token_signature_key";
 
     const decoded = jwt.verify(token, secret) as { username: string };
     req.user = decoded;

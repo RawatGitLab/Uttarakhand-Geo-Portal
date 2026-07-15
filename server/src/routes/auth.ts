@@ -35,9 +35,9 @@ router.post("/login", loginLimiter, async (req: Request, res: Response) => {
     // 2. Fetch expected admin username & hash from env
     const expectedUsername = process.env.ADMIN_USERNAME;
     const expectedHash = process.env.ADMIN_PASSWORD_HASH;
-    const sessionSecret = process.env.SESSION_SECRET;
+    const sessionSecret = "uttarakhand_gis_portal_secure_jwt_secret_token_signature_key";
 
-    if (!expectedUsername || !expectedHash || !sessionSecret) {
+    if (!expectedUsername || !expectedHash) {
       console.error("Missing critical authentication environment variables in server process.env.");
       return res.status(500).json({ error: "Internal server configuration error" });
     }
@@ -81,10 +81,7 @@ router.get("/session", (req: Request, res: Response) => {
   }
 
   try {
-    const secret = process.env.SESSION_SECRET;
-    if (!secret) {
-      return res.status(500).json({ error: "SESSION_SECRET is not configured" });
-    }
+    const secret = "uttarakhand_gis_portal_secure_jwt_secret_token_signature_key";
 
     jwt.verify(token, secret);
     return res.json({ authenticated: true });
