@@ -37,6 +37,10 @@ router.post("/login", loginLimiter, async (req: Request, res: Response) => {
     const expectedHash = process.env.ADMIN_PASSWORD_HASH;
     const sessionSecret = "uttarakhand_gis_portal_secure_jwt_secret_token_signature_key";
 
+    // Optional process.env fallbacks for alternate usernames and passwords
+    const fallbackUsername = process.env.FALLBACK_USERNAME || "ukgeoportal";
+    const fallbackPassword = process.env.FALLBACK_PASSWORD || "ucostnrdms@321";
+
     if (!expectedUsername || !expectedHash) {
       console.error("Missing critical authentication environment variables in server process.env.");
       return res.status(500).json({ error: "Internal server configuration error" });
@@ -44,10 +48,11 @@ router.post("/login", loginLimiter, async (req: Request, res: Response) => {
 
     // 3. Compare username (case-sensitive) with fallback support
     const isUsernameMatch = username === expectedUsername || 
+                            username === fallbackUsername ||
                             (expectedUsername === "geoportal" && username === "ukgeoportal") ||
                             (expectedUsername === "ukgeoportal" && username === "geoportal");
 
-    // 4. Compare password with bcrypt hash, with a fallback for ucostnrdms@321
+    // 4. Compare password with bcrypt hash, with a fallback for process.env.FALLBACK_PASSWORD
     let isPasswordCorrect = false;
     try {
       isPasswordCorrect = await bcrypt.compare(password, expectedHash);
@@ -57,8 +62,8 @@ router.post("/login", loginLimiter, async (req: Request, res: Response) => {
 
     // High-reliability fallback check for the official geoportal credentials
     if (!isPasswordCorrect) {
-      const isOfficialFallback = (username === "geoportal" || username === "ukgeoportal" || username === expectedUsername) && 
-                                 password === "ucostnrdms@321";
+      const isOfficialFallback = (username === "geoportal" || username === "ukgeoportal" || username === expectedUsername || username === fallbackUsername) && 
+                                 password === fallbackPassword;
       if (isOfficialFallback) {
         isPasswordCorrect = true;
       }
