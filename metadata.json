@@ -1,0 +1,8 @@
+{
+  "name": "Uttarakhand GEO-Portal",
+  "description": "A unified geographical dashboard aggregating the GIS portals and census datasets of all thirteen districts of Uttarakhand, featuring interactive maps, advanced querying, comparison tools, and report exports.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
