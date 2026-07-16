@@ -93,7 +93,7 @@ export const RightPanel: React.FC<RightPanelProps> = ({
             <span className="text-[10px] bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 font-mono font-semibold uppercase px-2.5 py-1 rounded-full">
               State Analytics Overview
             </span>
-            <h1 className="text-xl font-bold text-slate-900 dark:text-slate-50 mt-2">Uttarakhand GEO-Portal</h1>
+            <h1 className="text-xl font-bold text-slate-900 dark:text-slate-50 mt-2">Uttarakhand Geoportal</h1>
             <p className="text-xs text-slate-500 mt-1">A unified portal consolidating high-fidelity GIS layers, boundaries, and statistical profiles across all 13 administrative districts of Uttarakhand.</p>
           </div>
 

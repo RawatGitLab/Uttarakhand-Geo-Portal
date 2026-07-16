@@ -110,7 +110,7 @@ export default function App() {
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-sm font-bold tracking-tight text-slate-900 dark:text-slate-50 uppercase font-sans">
-                Uttarakhand GEO-Portal
+                Uttarakhand Geoportal
               </h1>
               <span className="text-[9px] font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/10">
                 v1.2 Aggregated
@@ -325,7 +325,7 @@ export default function App() {
             </div>
             <div>
               <p className="text-xs font-bold text-slate-900 dark:text-slate-50 uppercase tracking-widest font-sans">
-                UK GEO-Portal
+                UK Geoportal
               </p>
               <p className="text-[10px] text-slate-400 font-medium mt-1">Verifying Secure Session...</p>
             </div>

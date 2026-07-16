@@ -49,7 +49,7 @@ export const DistrictList: React.FC<DistrictListProps> = ({
         <div className="p-4 border-b border-slate-200/50 dark:border-white/10 bg-slate-50/50 dark:bg-slate-950/20">
           <h2 className="text-sm font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-2">
             <Layers className="w-4 h-4 text-sky-500" />
-            District Geo-Portals
+            District Geoportals
           </h2>
           <p className="text-xs text-slate-500 mt-1">Select districts from the map or list to overlay custom GIS layers and review datasets.</p>
         </div>

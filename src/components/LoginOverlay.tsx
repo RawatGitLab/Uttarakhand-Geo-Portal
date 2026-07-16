@@ -66,7 +66,7 @@ export function LoginOverlay({ onLoginSuccess }: LoginOverlayProps) {
           </div>
           <h2 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight flex items-center justify-center gap-1.5 uppercase font-sans">
             <ShieldCheck className="w-5 h-5 text-emerald-500" />
-            UK GEO-Portal
+            UK Geoportal
           </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 font-medium">
             Administrative GIS Authentication Gateway
@@ -159,7 +159,7 @@ export function LoginOverlay({ onLoginSuccess }: LoginOverlayProps) {
         <div className="mt-6 pt-5 border-t border-slate-200/50 dark:border-white/5 text-[9px] text-center font-mono text-slate-400 dark:text-slate-500 uppercase tracking-wider flex items-center justify-center gap-1">
           <span>UTTARAKHAND</span>
           <span className="text-slate-300 dark:text-white/10">•</span>
-          <span>GEO-PORTAL</span>
+          <span>GEOPORTAL</span>
         </div>
       </motion.div>
     </div>
