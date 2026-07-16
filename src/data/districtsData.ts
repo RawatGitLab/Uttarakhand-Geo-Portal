@@ -26,7 +26,7 @@ export const districtsData: DistrictDetail[] = [
     population: 622506,
     literacyRate: 80.47,
     sexRatio: 1139,
-    gisUrl: "https://district-almora-production.up.railway.app/",
+    gisUrl: "https://district-almora.onrender.com/",
     githubUrl: "https://github.com/RawatGitLab/District-Almora",
     centroid: [29.5971, 79.6591],
     description: "Known for its rich cultural heritage, unique handicrafts, delicious sweets like Bal Mithai, and panoramic views of the Himalayas. It is a major cultural hub of the Kumaon region.",
