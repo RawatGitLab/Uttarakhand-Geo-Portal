@@ -187,7 +187,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
           fillColor = getLiteracyColor(distInfo.literacyRate);
         } else {
           // default light-slate color
-          fillColor = distInfo.region === "Garhwal" ? "#38bdf8" : "#fbbf24"; // sky blue vs amber
+          fillColor = "#38bdf8"; // uniform sky blue for all districts
           fillOpacity = isActive ? 0.8 : 0.45;
         }
 
