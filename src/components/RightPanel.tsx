@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { 
-  Building2, Users, Maximize, BarChart3, ArrowRight,
+  Building2, Users, Maximize, Minimize, Layers, BarChart3, ArrowRight,
   TrendingUp, Award, ExternalLink, Github, Map, BookOpen, HeartPulse, FileSpreadsheet, PlusCircle, CheckCircle2, RotateCcw
 } from "lucide-react";
 import { DistrictDetail, districtsData, stateTotals } from "../data/districtsData";
@@ -32,6 +32,9 @@ export const RightPanel: React.FC<RightPanelProps> = ({
     const handleFullscreenChange = () => {
       const isCurrentlyFullscreen = !!document.fullscreenElement;
       setIsFullscreenGis(isCurrentlyFullscreen);
+      if (!isCurrentlyFullscreen) {
+        setActiveTab("profile");
+      }
     };
 
     document.addEventListener("fullscreenchange", handleFullscreenChange);
@@ -71,10 +74,18 @@ export const RightPanel: React.FC<RightPanelProps> = ({
     if (document.fullscreenElement) {
       document.exitFullscreen().catch(() => {
         setIsFullscreenGis(false);
+        setActiveTab("profile");
       });
     } else {
       setIsFullscreenGis(false);
+      setActiveTab("profile");
     }
+  };
+
+  const handleLoadGisApp = () => {
+    setActiveTab("gis");
+    setIsFullscreenGis(true);
+    handleEnterFullscreen();
   };
 
   // Sorting districts for comparison charts
@@ -231,55 +242,60 @@ export const RightPanel: React.FC<RightPanelProps> = ({
         /* Selected District Profile Panel */
         <div className="flex flex-col h-full overflow-hidden">
           
-          {/* Header Tab selectors */}
-          <div className="flex border-b border-slate-200/50 dark:border-white/10 p-2 bg-slate-50/50 dark:bg-slate-950/20 justify-between items-center">
-            <div className="flex gap-1.5">
-              <button
-                onClick={() => setActiveTab("profile")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                  activeTab === "profile"
-                    ? "bg-white/80 dark:bg-slate-800/80 text-slate-900 dark:text-slate-100 shadow-xs border border-slate-200/50 dark:border-white/10"
-                    : "text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
-                }`}
-              >
-                Profile & Datasets
-              </button>
-              <button
-                onClick={() => setActiveTab("gis")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 ${
-                  activeTab === "gis"
-                    ? "bg-white/80 dark:bg-slate-800/80 text-slate-900 dark:text-slate-100 shadow-xs border border-slate-200/50 dark:border-white/10"
-                    : "text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
-                }`}
-              >
-                Live Web GIS
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              </button>
-            </div>
+          {/* Header Bar */}
+          <div className="grid grid-cols-3 gap-1.5 p-2 border-b border-slate-200/50 dark:border-white/10 bg-slate-50/50 dark:bg-slate-950/20 items-center w-full">
+            <button
+              onClick={() => {
+                setActiveTab("profile");
+                setIsFullscreenGis(false);
+              }}
+              className={`px-2 py-1.5 rounded-md text-[11px] font-semibold transition-all cursor-pointer flex items-center justify-center gap-1 h-8 w-full ${
+                activeTab === "profile"
+                  ? "bg-indigo-600 text-white border border-indigo-700 shadow-xs"
+                  : "bg-indigo-50 text-indigo-900 border border-indigo-200 hover:bg-indigo-100 dark:bg-indigo-950/60 dark:text-indigo-200 dark:border-indigo-800 dark:hover:bg-indigo-900/80"
+              }`}
+            >
+              <BarChart3 className="w-3.5 h-3.5 shrink-0" />
+              <span className="truncate">Profile</span>
+            </button>
 
-            {/* Back button */}
+            <button
+              onClick={() => {
+                setActiveTab("gis");
+              }}
+              className={`px-2 py-1.5 rounded-md text-[11px] font-semibold transition-all flex items-center justify-center gap-1 cursor-pointer h-8 w-full ${
+                activeTab === "gis"
+                  ? "bg-purple-600 text-white border border-purple-700 shadow-xs"
+                  : "bg-purple-50 text-purple-900 border border-purple-200 hover:bg-purple-100 dark:bg-purple-950/60 dark:text-purple-200 dark:border-purple-800 dark:hover:bg-purple-900/80"
+              }`}
+            >
+              <Layers className="w-3.5 h-3.5 shrink-0" />
+              <span className="truncate">Load App</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-purple-300 animate-pulse shrink-0" />
+            </button>
+
             <button
               onClick={() => onSelectDistrict(null)}
-              className="text-[10px] font-mono text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 px-2 py-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
+              className="px-2 py-1.5 rounded-md text-[11px] font-semibold transition-all flex items-center justify-center gap-1 cursor-pointer h-8 w-full text-slate-700 dark:text-slate-300 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700"
             >
-              Close Profile
+              <span className="truncate">Close Profile</span>
             </button>
           </div>
 
           {/* PROFILE TAB */}
           {activeTab === "profile" && (
-            <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-5">
+            <div className="flex-1 flex flex-col justify-between overflow-hidden p-3 space-y-2 text-xs">
               
               {/* Title Header */}
-              <div className="flex items-start justify-between border-b border-slate-200/50 dark:border-white/10 pb-4">
+              <div className="flex items-start justify-between border-b border-slate-200/50 dark:border-white/10 pb-2">
                 <div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[9px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-mono font-semibold uppercase px-2 py-0.5 rounded-md">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[9px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-mono font-semibold uppercase px-1.5 py-0.5 rounded">
                       {selectedDistrict.region} Region
                     </span>
                     <button
                       onClick={() => onToggleComparison(selectedDistrict.id)}
-                      className={`text-[9px] font-mono flex items-center gap-1 px-2 py-0.5 rounded-md border transition-all ${
+                      className={`text-[9px] font-mono flex items-center gap-1 px-1.5 py-0.5 rounded border transition-all cursor-pointer ${
                         comparisonList.includes(selectedDistrict.id)
                           ? "bg-emerald-50 border-emerald-200/50 text-emerald-700 dark:bg-emerald-950/40 dark:border-emerald-800 dark:text-emerald-400"
                           : "bg-white/50 border-slate-200/50 text-slate-500 hover:border-slate-300 dark:bg-slate-800/50 dark:border-white/10 dark:text-slate-400"
@@ -298,80 +314,88 @@ export const RightPanel: React.FC<RightPanelProps> = ({
                       )}
                     </button>
                   </div>
-                  <h1 className="text-xl font-bold text-slate-900 dark:text-slate-50 mt-1.5 flex items-center gap-1.5">
+                  <h1 className="text-base font-bold text-slate-900 dark:text-slate-50 mt-1 flex items-center gap-1.5">
                     {selectedDistrict.name}
                   </h1>
-                  <span className="text-xs text-slate-400 mt-1 block">Headquarters: <strong className="text-slate-600 dark:text-slate-300">{selectedDistrict.headquarters}</strong></span>
+                  <span className="text-[11px] text-slate-400 block">Headquarters: <strong className="text-slate-600 dark:text-slate-300">{selectedDistrict.headquarters}</strong></span>
                 </div>
 
-                <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-1">
                   <a 
                     href={selectedDistrict.gisUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-1.5 bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-300 rounded-lg border border-slate-200/50 dark:border-white/10 inline-flex items-center justify-center"
+                    className="p-1.5 bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-300 rounded-md border border-slate-200/50 dark:border-white/10 inline-flex items-center justify-center transition-colors"
                     title="Launch Web GIS applet in new window"
                   >
-                    <ExternalLink className="w-4 h-4" />
+                    <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                   <a 
                     href={selectedDistrict.githubUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-1.5 bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-300 rounded-lg border border-slate-200/50 dark:border-white/10 inline-flex items-center justify-center"
+                    className="p-1.5 bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-300 rounded-md border border-slate-200/50 dark:border-white/10 inline-flex items-center justify-center transition-colors"
                     title="Inspect district source repository"
                   >
-                    <Github className="w-4 h-4" />
+                    <Github className="w-3.5 h-3.5" />
                   </a>
                 </div>
               </div>
 
               {/* Brief description */}
-              <div className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed italic border-l-2 border-slate-300 dark:border-slate-700 pl-3">
+              <div className="text-[11px] text-slate-600 dark:text-slate-300 leading-snug italic border-l-2 border-indigo-500/50 pl-2.5 py-0.5 line-clamp-2 bg-indigo-50/20 dark:bg-indigo-950/10 rounded-r-md">
                 "{selectedDistrict.description}"
               </div>
 
               {/* Key Census Dataset Info */}
-              <div className="space-y-2">
-                <h3 className="text-xs font-semibold text-slate-800 dark:text-slate-200 uppercase tracking-wider font-mono">
+              <div className="space-y-1.5">
+                <h3 className="text-[10px] font-semibold text-slate-800 dark:text-slate-200 uppercase tracking-wider font-mono">
                   Administrative Indicators
                 </h3>
-                <div className="grid grid-cols-2 gap-2.5">
-                  <div className="p-3.5 bg-slate-50/30 dark:bg-slate-950/10 rounded-xl border border-slate-200/50 dark:border-white/10 flex items-start gap-3">
-                    <Map className="w-4 h-4 text-emerald-500 mt-0.5" />
-                    <div>
-                      <span className="block text-[8px] text-slate-400 font-mono uppercase">Landed Area</span>
-                      <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 font-mono mt-0.5 block">
+                <div className="grid grid-cols-2 gap-1.5">
+                  <div className="p-2 bg-slate-50/60 dark:bg-slate-950/30 rounded-lg border border-slate-200/60 dark:border-white/10 flex items-center gap-2 transition-all hover:border-slate-300 dark:hover:border-white/20">
+                    <div className="p-1.5 rounded-md bg-emerald-500/10 dark:bg-emerald-500/20 shrink-0">
+                      <Map className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="block text-[8px] text-slate-400 font-mono uppercase truncate">Landed Area</span>
+                      <span className="text-[11px] font-semibold text-slate-800 dark:text-slate-200 font-mono block truncate">
                         {selectedDistrict.area.toLocaleString()} km²
                       </span>
                     </div>
                   </div>
 
-                  <div className="p-3.5 bg-slate-50/30 dark:bg-slate-950/10 rounded-xl border border-slate-200/50 dark:border-white/10 flex items-start gap-3">
-                    <Users className="w-4 h-4 text-sky-500 mt-0.5" />
-                    <div>
-                      <span className="block text-[8px] text-slate-400 font-mono uppercase">Population (2011)</span>
-                      <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 font-mono mt-0.5 block">
+                  <div className="p-2 bg-slate-50/60 dark:bg-slate-950/30 rounded-lg border border-slate-200/60 dark:border-white/10 flex items-center gap-2 transition-all hover:border-slate-300 dark:hover:border-white/20">
+                    <div className="p-1.5 rounded-md bg-sky-500/10 dark:bg-sky-500/20 shrink-0">
+                      <Users className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="block text-[8px] text-slate-400 font-mono uppercase truncate">Population</span>
+                      <span className="text-[11px] font-semibold text-slate-800 dark:text-slate-200 font-mono block truncate">
                         {selectedDistrict.population.toLocaleString()}
                       </span>
                     </div>
                   </div>
 
-                  <div className="p-3.5 bg-slate-50/30 dark:bg-slate-950/10 rounded-xl border border-slate-200/50 dark:border-white/10 flex items-start gap-3">
-                    <BookOpen className="w-4 h-4 text-purple-500 mt-0.5" />
-                    <div>
-                      <span className="block text-[8px] text-slate-400 font-mono uppercase">Literacy Rate</span>
-                      <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 font-mono mt-0.5 block">
+                  <div className="p-2 bg-slate-50/60 dark:bg-slate-950/30 rounded-lg border border-slate-200/60 dark:border-white/10 flex items-center gap-2 transition-all hover:border-slate-300 dark:hover:border-white/20">
+                    <div className="p-1.5 rounded-md bg-purple-500/10 dark:bg-purple-500/20 shrink-0">
+                      <BookOpen className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="block text-[8px] text-slate-400 font-mono uppercase truncate">Literacy</span>
+                      <span className="text-[11px] font-semibold text-slate-800 dark:text-slate-200 font-mono block truncate">
                         {selectedDistrict.literacyRate}%
                       </span>
                     </div>
                   </div>
 
-                  <div className="p-3.5 bg-slate-50/30 dark:bg-slate-950/10 rounded-xl border border-slate-200/50 dark:border-white/10 flex items-start gap-3">
-                    <HeartPulse className="w-4 h-4 text-pink-500 mt-0.5" />
-                    <div>
-                      <span className="block text-[8px] text-slate-400 font-mono uppercase">Sex Ratio (F/1000M)</span>
-                      <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 font-mono mt-0.5 block">
+                  <div className="p-2 bg-slate-50/60 dark:bg-slate-950/30 rounded-lg border border-slate-200/60 dark:border-white/10 flex items-center gap-2 transition-all hover:border-slate-300 dark:hover:border-white/20">
+                    <div className="p-1.5 rounded-md bg-pink-500/10 dark:bg-pink-500/20 shrink-0">
+                      <HeartPulse className="w-3.5 h-3.5 text-pink-600 dark:text-pink-400" />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="block text-[8px] text-slate-400 font-mono uppercase truncate">Sex Ratio</span>
+                      <span className="text-[11px] font-semibold text-slate-800 dark:text-slate-200 font-mono block truncate">
                         {selectedDistrict.sexRatio}
                       </span>
                     </div>
@@ -380,15 +404,15 @@ export const RightPanel: React.FC<RightPanelProps> = ({
               </div>
 
               {/* Landmark Key features list */}
-              <div className="space-y-3 pt-2">
-                <h3 className="text-xs font-semibold text-slate-800 dark:text-slate-200 uppercase tracking-wider font-mono">
+              <div className="space-y-1.5">
+                <h3 className="text-[10px] font-semibold text-slate-800 dark:text-slate-200 uppercase tracking-wider font-mono">
                   Prominent Geographical Landmarks
                 </h3>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1">
                   {selectedDistrict.keyFeatures.map((feat) => (
                     <span 
                       key={feat}
-                      className="px-2.5 py-1 text-[10px] bg-slate-100/50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 rounded-lg border border-slate-200/50 dark:border-white/10 font-medium"
+                      className="px-2 py-0.5 text-[9px] bg-slate-100/80 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 rounded border border-slate-200/50 dark:border-white/10 font-medium"
                     >
                       {feat}
                     </span>
@@ -397,16 +421,17 @@ export const RightPanel: React.FC<RightPanelProps> = ({
               </div>
 
               {/* Embedded GIS Banner */}
-              <div className="p-4 bg-emerald-50/30 dark:bg-emerald-950/10 border border-emerald-100 dark:border-emerald-900/40 rounded-xl flex items-center justify-between">
-                <div>
-                  <h4 className="text-xs font-semibold text-emerald-800 dark:text-emerald-400">Interact with Web GIS App</h4>
-                  <p className="text-[10px] text-slate-400 mt-0.5">Access custom thematic map layers and shapefiles.</p>
+              <div className="p-2.5 bg-emerald-50/40 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/40 rounded-lg flex items-center justify-between gap-2 shadow-2xs">
+                <div className="min-w-0">
+                  <h4 className="text-[11px] font-semibold text-emerald-800 dark:text-emerald-400 truncate">Interact with Web GIS App</h4>
+                  <p className="text-[9px] text-slate-400 truncate">Access custom thematic map layers & shapefiles.</p>
                 </div>
                 <button
-                  onClick={() => setActiveTab("gis")}
-                  className="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg text-[10px] font-medium transition-colors"
+                  onClick={handleLoadGisApp}
+                  className="px-2.5 py-1 bg-emerald-500 hover:bg-emerald-600 text-white rounded-md text-[10px] font-medium transition-colors cursor-pointer flex items-center gap-1 shrink-0 shadow-xs"
                 >
                   Load App
+                  <ExternalLink className="w-3 h-3 text-white" />
                 </button>
               </div>
 
@@ -418,39 +443,63 @@ export const RightPanel: React.FC<RightPanelProps> = ({
             <div 
               ref={fullscreenContainerRef} 
               className={`flex-1 bg-slate-100 dark:bg-slate-950 flex flex-col relative ${
-                isFullscreenGis ? "fixed inset-0 z-[9999] bg-slate-950 w-screen h-screen" : ""
+                isFullscreenGis ? "fixed inset-0 z-[9999] bg-slate-950 w-screen h-screen" : "h-full"
               }`}
             >
-              
-              {/* Embed warning/instruction */}
+              {/* Embed Header Controls */}
               {isFullscreenGis ? (
-                <div className="bg-slate-900 text-white p-3.5 flex justify-between items-center px-6 shrink-0">
-                  <div className="flex items-center gap-2">
-                    <span className="p-1 bg-emerald-500 rounded-md text-white font-mono text-xs">LIVE</span>
-                    <h2 className="text-sm font-semibold">Unified Web GIS Workspace: {selectedDistrict.name} District</h2>
+                <div className="bg-slate-900 text-white p-3 flex justify-between items-center px-6 shrink-0 border-b border-slate-800">
+                  <div className="flex items-center gap-2.5">
+                    <button
+                      onClick={handleExitFullscreen}
+                      title="Click to exit full screen"
+                      className="px-2 py-0.5 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/30 hover:border-emerald-500/50 rounded font-mono text-[10px] font-semibold tracking-wide cursor-pointer transition-colors flex items-center gap-1"
+                    >
+                      <Minimize className="w-3 h-3" />
+                      FULL SCREEN
+                    </button>
+                    <h2 className="text-sm font-semibold text-slate-100">
+                      Unified Web GIS Workspace: {selectedDistrict.name} District
+                    </h2>
                   </div>
-                  <button
-                    onClick={handleExitFullscreen}
-                    className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-xs font-semibold transition-all text-white border border-slate-700 cursor-pointer"
-                  >
-                    Exit Workspace
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={handleExitFullscreen}
+                      className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold transition-all border border-slate-700 cursor-pointer flex items-center gap-1.5"
+                    >
+                      <Minimize className="w-3.5 h-3.5" />
+                      Exit Workspace
+                    </button>
+                  </div>
                 </div>
               ) : (
-                <div className="p-3 bg-amber-500/10 border-b border-amber-500/20 text-[10px] text-amber-700 dark:text-amber-400 flex items-center justify-between shrink-0">
-                  <span>Rendering Live GIS App for <strong>{selectedDistrict.name}</strong>. Drag, click, and inspect layers directly.</span>
+                <div className="p-2.5 bg-slate-900 text-white flex items-center justify-between px-3.5 shrink-0 border-b border-slate-800">
+                  <div className="flex items-center gap-2 overflow-hidden">
+                    <button
+                      onClick={handleEnterFullscreen}
+                      title="Click to expand to full screen workspace"
+                      className="px-2 py-0.5 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/30 hover:border-emerald-500/50 rounded font-mono text-[9px] font-semibold tracking-wide shrink-0 cursor-pointer transition-colors flex items-center gap-1"
+                    >
+                      <Maximize className="w-2.5 h-2.5" />
+                      INLINE EMBED
+                    </button>
+                    <span className="text-xs font-medium text-slate-200 truncate">
+                      {selectedDistrict.name} GIS App
+                    </span>
+                  </div>
                   <button 
                     onClick={handleEnterFullscreen}
-                    className="px-2 py-0.5 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-600 rounded-md hover:bg-slate-50 flex items-center gap-1 font-medium font-sans cursor-pointer"
+                    className="px-2.5 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded-md text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer shrink-0 shadow-xs"
+                    title="Open Full Screen Workspace"
                   >
                     <Maximize className="w-3 h-3" />
-                    Full Embed
+                    Full Screen
                   </button>
                 </div>
               )}
 
               {/* Iframe element */}
-              <div className="flex-1 w-full relative">
+              <div className="flex-1 w-full relative bg-slate-900">
                 <iframe
                   src={selectedDistrict.gisUrl}
                   title={`${selectedDistrict.name} GIS App`}
@@ -462,7 +511,6 @@ export const RightPanel: React.FC<RightPanelProps> = ({
 
             </div>
           )}
-
         </div>
       )}
 

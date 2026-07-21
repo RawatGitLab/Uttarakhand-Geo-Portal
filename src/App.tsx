@@ -100,28 +100,28 @@ export default function App() {
     <div className="min-h-screen w-full bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col transition-colors duration-300 no-print">
       
       {/* 1. Header Navigation */}
-      <header className="sticky top-0 z-[500] w-full bg-white/60 dark:bg-slate-950/60 backdrop-blur-lg border-b border-slate-200/50 dark:border-white/10 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
+      <header className="sticky top-0 z-[500] w-full bg-white/60 dark:bg-slate-950/60 backdrop-blur-lg border-b border-slate-200/50 dark:border-white/10 px-4 py-2 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs">
         
         {/* Brand Logo & Name */}
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-gradient-to-tr from-sky-500 to-indigo-600 rounded-xl text-white shadow-md shadow-sky-500/20">
-            <Compass className="w-5 h-5 animate-spin-slow" />
+        <div className="flex items-center gap-2.5">
+          <div className="p-1.5 bg-gradient-to-tr from-sky-500 to-indigo-600 rounded-lg text-white shadow-md shadow-sky-500/20">
+            <Compass className="w-4 h-4 animate-spin-slow" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-sm font-bold tracking-tight text-slate-900 dark:text-slate-50 uppercase font-sans">
+              <h1 className="text-xs sm:text-sm font-bold tracking-tight text-slate-900 dark:text-slate-50 uppercase font-sans">
                 Uttarakhand Geoportal
               </h1>
-              <span className="text-[9px] font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/10">
+              <span className="text-[9px] font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-1.5 py-0.5 rounded-full border border-emerald-500/10">
                 v1.2 Aggregated
               </span>
             </div>
-            <p className="text-[10px] text-slate-400 font-medium">Dashboard</p>
+            <p className="text-[9px] text-slate-400 font-medium leading-none">Dashboard</p>
           </div>
         </div>
 
         {/* State-wide Quick Metrics Summary */}
-        <div className="hidden lg:flex items-center gap-6 border-l border-r border-slate-200/50 dark:border-white/10 px-8 py-1.5 text-[11px] font-mono">
+        <div className="hidden lg:flex items-center gap-4 border-l border-r border-slate-200/50 dark:border-white/10 px-4 py-0.5 text-[10px] font-mono">
           <div>
             <span className="block text-purple-600 dark:text-purple-400 text-[8px] uppercase tracking-wider">State</span>
             <span className="font-semibold text-slate-800 dark:text-slate-200">Uttarakhand</span>
@@ -154,10 +154,10 @@ export default function App() {
                 setIsGisDropdownOpen(!isGisDropdownOpen);
                 setGisSearchQuery("");
               }}
-              className="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all shadow-md shadow-indigo-600/10 cursor-pointer"
+              className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all shadow-md shadow-indigo-600/10 cursor-pointer h-8"
               title="Open District Web GIS App"
             >
-              <Globe className="w-4 h-4" />
+              <Globe className="w-3.5 h-3.5" />
               <span>Web GIS Apps</span>
               <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isGisDropdownOpen ? "rotate-180" : ""}`} />
             </button>
@@ -231,12 +231,12 @@ export default function App() {
           {/* Executive Report Modal Trigger */}
           <button
             onClick={() => setIsReportModalOpen(true)}
-            className="px-3.5 py-2 bg-sky-500 hover:bg-sky-600 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all shadow-md shadow-sky-500/10"
+            className="px-3 py-1.5 bg-sky-500 hover:bg-sky-600 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all shadow-md shadow-sky-500/10 cursor-pointer h-8"
           >
-            <FileSpreadsheet className="w-4 h-4" />
-            Report Builder
+            <FileSpreadsheet className="w-3.5 h-3.5" />
+            <span>Report Builder</span>
             {comparisonList.length > 0 && (
-              <span className="ml-1 w-4 h-4 bg-white text-sky-600 text-[9px] rounded-full flex items-center justify-center font-bold font-mono">
+              <span className="ml-0.5 w-4 h-4 bg-white text-sky-600 text-[9px] rounded-full flex items-center justify-center font-bold font-mono">
                 {comparisonList.length}
               </span>
             )}
@@ -245,20 +245,20 @@ export default function App() {
           {/* Theme Toggler */}
           <button
             onClick={() => setTheme((prev) => (prev === "light" ? "dark" : "light"))}
-            className="p-2.5 bg-slate-100/50 hover:bg-slate-200/50 dark:bg-slate-850/50 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 rounded-xl transition-all border border-slate-200/50 dark:border-white/10 cursor-pointer"
+            className="px-2.5 py-1.5 bg-slate-100/50 hover:bg-slate-200/50 dark:bg-slate-850/50 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 rounded-lg transition-all border border-slate-200/50 dark:border-white/10 cursor-pointer h-8 flex items-center justify-center"
             aria-label="Toggle visual contrast theme"
           >
-            {theme === "light" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+            {theme === "light" ? <Moon className="w-3.5 h-3.5" /> : <Sun className="w-3.5 h-3.5" />}
           </button>
 
           {/* Secure Logout Button */}
           {isLoggedIn && (
             <button
               onClick={handleLogout}
-              className="p-2.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-500/20 rounded-xl transition-all flex items-center gap-1.5 text-xs font-semibold cursor-pointer"
+              className="px-2.5 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-500/20 rounded-lg transition-all flex items-center gap-1.5 text-xs font-semibold cursor-pointer h-8"
               title="Secure Logout"
             >
-              <LogOut className="w-4 h-4" />
+              <LogOut className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Logout</span>
             </button>
           )}
