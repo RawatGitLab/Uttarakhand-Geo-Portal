@@ -284,118 +284,120 @@ export const RightPanel: React.FC<RightPanelProps> = ({
 
           {/* PROFILE TAB */}
           {activeTab === "profile" && (
-            <div className="flex-1 flex flex-col justify-between overflow-hidden p-3 space-y-2 text-xs">
+            <div className="flex-1 overflow-y-auto custom-scrollbar p-4 space-y-4">
               
               {/* Title Header */}
-              <div className="flex items-start justify-between border-b border-slate-200/50 dark:border-white/10 pb-2">
-                <div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-[9px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-mono font-semibold uppercase px-1.5 py-0.5 rounded">
+              <div className="flex items-start justify-between border-b border-slate-200/50 dark:border-white/10 pb-3">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-mono font-semibold uppercase px-2 py-0.5 rounded-md border border-slate-200 dark:border-slate-700">
                       {selectedDistrict.region} Region
                     </span>
                     <button
                       onClick={() => onToggleComparison(selectedDistrict.id)}
-                      className={`text-[9px] font-mono flex items-center gap-1 px-1.5 py-0.5 rounded border transition-all cursor-pointer ${
+                      className={`text-[10px] font-mono flex items-center gap-1.5 px-2 py-0.5 rounded-md border transition-all cursor-pointer ${
                         comparisonList.includes(selectedDistrict.id)
-                          ? "bg-emerald-50 border-emerald-200/50 text-emerald-700 dark:bg-emerald-950/40 dark:border-emerald-800 dark:text-emerald-400"
-                          : "bg-white/50 border-slate-200/50 text-slate-500 hover:border-slate-300 dark:bg-slate-800/50 dark:border-white/10 dark:text-slate-400"
+                          ? "bg-emerald-50 border-emerald-300 text-emerald-700 dark:bg-emerald-950/60 dark:border-emerald-700 dark:text-emerald-300 shadow-xs"
+                          : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300"
                       }`}
                     >
                       {comparisonList.includes(selectedDistrict.id) ? (
                         <>
-                          <CheckCircle2 className="w-3 h-3 text-emerald-500" />
-                          In Report
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                          <span>In Report</span>
                         </>
                       ) : (
                         <>
-                          <PlusCircle className="w-3 h-3" />
-                          Add to Report
+                          <PlusCircle className="w-3.5 h-3.5" />
+                          <span>Add to Report</span>
                         </>
                       )}
                     </button>
                   </div>
-                  <h1 className="text-base font-bold text-slate-900 dark:text-slate-50 mt-1 flex items-center gap-1.5">
+                  <h1 className="text-lg font-bold text-slate-900 dark:text-slate-50 flex items-center gap-1.5 pt-0.5">
                     {selectedDistrict.name}
                   </h1>
-                  <span className="text-[11px] text-slate-400 block">Headquarters: <strong className="text-slate-600 dark:text-slate-300">{selectedDistrict.headquarters}</strong></span>
+                  <span className="text-xs text-slate-500 dark:text-slate-400 block">
+                    Headquarters: <strong className="text-slate-700 dark:text-slate-200">{selectedDistrict.headquarters}</strong>
+                  </span>
                 </div>
 
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1.5 shrink-0">
                   <a 
                     href={selectedDistrict.gisUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-1.5 bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-300 rounded-md border border-slate-200/50 dark:border-white/10 inline-flex items-center justify-center transition-colors"
+                    className="p-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-200 rounded-lg border border-slate-200 dark:border-slate-700 inline-flex items-center justify-center transition-colors cursor-pointer"
                     title="Launch Web GIS applet in new window"
                   >
-                    <ExternalLink className="w-3.5 h-3.5" />
+                    <ExternalLink className="w-4 h-4" />
                   </a>
                   <a 
                     href={selectedDistrict.githubUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-1.5 bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-300 rounded-md border border-slate-200/50 dark:border-white/10 inline-flex items-center justify-center transition-colors"
+                    className="p-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-200 rounded-lg border border-slate-200 dark:border-slate-700 inline-flex items-center justify-center transition-colors cursor-pointer"
                     title="Inspect district source repository"
                   >
-                    <Github className="w-3.5 h-3.5" />
+                    <Github className="w-4 h-4" />
                   </a>
                 </div>
               </div>
 
-              {/* Brief description */}
-              <div className="text-[11px] text-slate-600 dark:text-slate-300 leading-snug italic border-l-2 border-indigo-500/50 pl-2.5 py-0.5 line-clamp-2 bg-indigo-50/20 dark:bg-indigo-950/10 rounded-r-md">
+              {/* Brief description - Full text displayed without truncation */}
+              <div className="p-3 text-xs text-slate-700 dark:text-slate-300 leading-relaxed italic border-l-3 border-indigo-500 bg-indigo-50/40 dark:bg-indigo-950/20 rounded-r-xl shadow-2xs">
                 "{selectedDistrict.description}"
               </div>
 
-              {/* Key Census Dataset Info */}
-              <div className="space-y-1.5">
-                <h3 className="text-[10px] font-semibold text-slate-800 dark:text-slate-200 uppercase tracking-wider font-mono">
-                  Administrative Indicators
+              {/* Administrative Indicators */}
+              <div className="space-y-2">
+                <h3 className="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider font-mono flex items-center gap-1.5">
+                  <span>Administrative Indicators</span>
                 </h3>
-                <div className="grid grid-cols-2 gap-1.5">
-                  <div className="p-2 bg-slate-50/60 dark:bg-slate-950/30 rounded-lg border border-slate-200/60 dark:border-white/10 flex items-center gap-2 transition-all hover:border-slate-300 dark:hover:border-white/20">
-                    <div className="p-1.5 rounded-md bg-emerald-500/10 dark:bg-emerald-500/20 shrink-0">
-                      <Map className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                <div className="grid grid-cols-2 gap-2.5">
+                  <div className="p-2.5 bg-slate-50/80 dark:bg-slate-950/40 rounded-xl border border-slate-200/80 dark:border-white/10 flex items-center gap-2.5 transition-all hover:border-slate-300 dark:hover:border-white/20 shadow-2xs">
+                    <div className="p-2 rounded-lg bg-emerald-500/10 dark:bg-emerald-500/20 shrink-0">
+                      <Map className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                     </div>
                     <div className="min-w-0">
-                      <span className="block text-[8px] text-slate-400 font-mono uppercase truncate">Landed Area</span>
-                      <span className="text-[11px] font-semibold text-slate-800 dark:text-slate-200 font-mono block truncate">
+                      <span className="block text-[9px] text-slate-400 font-mono uppercase truncate font-medium">Landed Area</span>
+                      <span className="text-xs font-bold text-slate-800 dark:text-slate-100 font-mono block truncate">
                         {selectedDistrict.area.toLocaleString()} km²
                       </span>
                     </div>
                   </div>
 
-                  <div className="p-2 bg-slate-50/60 dark:bg-slate-950/30 rounded-lg border border-slate-200/60 dark:border-white/10 flex items-center gap-2 transition-all hover:border-slate-300 dark:hover:border-white/20">
-                    <div className="p-1.5 rounded-md bg-sky-500/10 dark:bg-sky-500/20 shrink-0">
-                      <Users className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
+                  <div className="p-2.5 bg-slate-50/80 dark:bg-slate-950/40 rounded-xl border border-slate-200/80 dark:border-white/10 flex items-center gap-2.5 transition-all hover:border-slate-300 dark:hover:border-white/20 shadow-2xs">
+                    <div className="p-2 rounded-lg bg-sky-500/10 dark:bg-sky-500/20 shrink-0">
+                      <Users className="w-4 h-4 text-sky-600 dark:text-sky-400" />
                     </div>
                     <div className="min-w-0">
-                      <span className="block text-[8px] text-slate-400 font-mono uppercase truncate">Population</span>
-                      <span className="text-[11px] font-semibold text-slate-800 dark:text-slate-200 font-mono block truncate">
+                      <span className="block text-[9px] text-slate-400 font-mono uppercase truncate font-medium">Population</span>
+                      <span className="text-xs font-bold text-slate-800 dark:text-slate-100 font-mono block truncate">
                         {selectedDistrict.population.toLocaleString()}
                       </span>
                     </div>
                   </div>
 
-                  <div className="p-2 bg-slate-50/60 dark:bg-slate-950/30 rounded-lg border border-slate-200/60 dark:border-white/10 flex items-center gap-2 transition-all hover:border-slate-300 dark:hover:border-white/20">
-                    <div className="p-1.5 rounded-md bg-purple-500/10 dark:bg-purple-500/20 shrink-0">
-                      <BookOpen className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+                  <div className="p-2.5 bg-slate-50/80 dark:bg-slate-950/40 rounded-xl border border-slate-200/80 dark:border-white/10 flex items-center gap-2.5 transition-all hover:border-slate-300 dark:hover:border-white/20 shadow-2xs">
+                    <div className="p-2 rounded-lg bg-purple-500/10 dark:bg-purple-500/20 shrink-0">
+                      <BookOpen className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                     </div>
                     <div className="min-w-0">
-                      <span className="block text-[8px] text-slate-400 font-mono uppercase truncate">Literacy</span>
-                      <span className="text-[11px] font-semibold text-slate-800 dark:text-slate-200 font-mono block truncate">
+                      <span className="block text-[9px] text-slate-400 font-mono uppercase truncate font-medium">Literacy Rate</span>
+                      <span className="text-xs font-bold text-slate-800 dark:text-slate-100 font-mono block truncate">
                         {selectedDistrict.literacyRate}%
                       </span>
                     </div>
                   </div>
 
-                  <div className="p-2 bg-slate-50/60 dark:bg-slate-950/30 rounded-lg border border-slate-200/60 dark:border-white/10 flex items-center gap-2 transition-all hover:border-slate-300 dark:hover:border-white/20">
-                    <div className="p-1.5 rounded-md bg-pink-500/10 dark:bg-pink-500/20 shrink-0">
-                      <HeartPulse className="w-3.5 h-3.5 text-pink-600 dark:text-pink-400" />
+                  <div className="p-2.5 bg-slate-50/80 dark:bg-slate-950/40 rounded-xl border border-slate-200/80 dark:border-white/10 flex items-center gap-2.5 transition-all hover:border-slate-300 dark:hover:border-white/20 shadow-2xs">
+                    <div className="p-2 rounded-lg bg-pink-500/10 dark:bg-pink-500/20 shrink-0">
+                      <HeartPulse className="w-4 h-4 text-pink-600 dark:text-pink-400" />
                     </div>
                     <div className="min-w-0">
-                      <span className="block text-[8px] text-slate-400 font-mono uppercase truncate">Sex Ratio</span>
-                      <span className="text-[11px] font-semibold text-slate-800 dark:text-slate-200 font-mono block truncate">
+                      <span className="block text-[9px] text-slate-400 font-mono uppercase truncate font-medium">Sex Ratio</span>
+                      <span className="text-xs font-bold text-slate-800 dark:text-slate-100 font-mono block truncate">
                         {selectedDistrict.sexRatio}
                       </span>
                     </div>
@@ -404,15 +406,15 @@ export const RightPanel: React.FC<RightPanelProps> = ({
               </div>
 
               {/* Landmark Key features list */}
-              <div className="space-y-1.5">
-                <h3 className="text-[10px] font-semibold text-slate-800 dark:text-slate-200 uppercase tracking-wider font-mono">
+              <div className="space-y-2">
+                <h3 className="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider font-mono">
                   Prominent Geographical Landmarks
                 </h3>
-                <div className="flex flex-wrap gap-1">
+                <div className="flex flex-wrap gap-1.5">
                   {selectedDistrict.keyFeatures.map((feat) => (
                     <span 
                       key={feat}
-                      className="px-2 py-0.5 text-[9px] bg-slate-100/80 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 rounded border border-slate-200/50 dark:border-white/10 font-medium"
+                      className="px-2.5 py-1 text-xs bg-slate-100 dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 rounded-lg border border-slate-200/80 dark:border-slate-700/80 font-medium hover:bg-slate-200/70 dark:hover:bg-slate-700 transition-colors"
                     >
                       {feat}
                     </span>
@@ -421,17 +423,17 @@ export const RightPanel: React.FC<RightPanelProps> = ({
               </div>
 
               {/* Embedded GIS Banner */}
-              <div className="p-2.5 bg-emerald-50/40 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/40 rounded-lg flex items-center justify-between gap-2 shadow-2xs">
+              <div className="p-3.5 bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-indigo-500/10 dark:from-emerald-950/30 dark:via-teal-950/30 dark:to-indigo-950/30 border border-emerald-500/20 dark:border-emerald-500/30 rounded-xl flex items-center justify-between gap-3 shadow-xs">
                 <div className="min-w-0">
-                  <h4 className="text-[11px] font-semibold text-emerald-800 dark:text-emerald-400 truncate">Interact with Web GIS App</h4>
-                  <p className="text-[9px] text-slate-400 truncate">Access custom thematic map layers & shapefiles.</p>
+                  <h4 className="text-xs font-bold text-emerald-800 dark:text-emerald-400 truncate">Interact with Web GIS App</h4>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5">Access custom thematic map layers & shapefiles.</p>
                 </div>
                 <button
                   onClick={handleLoadGisApp}
-                  className="px-2.5 py-1 bg-emerald-500 hover:bg-emerald-600 text-white rounded-md text-[10px] font-medium transition-colors cursor-pointer flex items-center gap-1 shrink-0 shadow-xs"
+                  className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold transition-colors cursor-pointer flex items-center gap-1.5 shrink-0 shadow-xs"
                 >
-                  Load App
-                  <ExternalLink className="w-3 h-3 text-white" />
+                  <span>Load App</span>
+                  <ExternalLink className="w-3.5 h-3.5 text-white" />
                 </button>
               </div>
 
