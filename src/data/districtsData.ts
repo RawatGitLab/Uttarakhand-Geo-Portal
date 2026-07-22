@@ -32,22 +32,6 @@ export const districtsData: DistrictDetail[] = [
     description: "Known for its rich cultural heritage, unique handicrafts, delicious sweets like Bal Mithai, and panoramic views of the Himalayas. It is a major cultural hub of the Kumaon region.",
     keyFeatures: ["Kasar Devi Temple", "Katarmal Sun Temple", "Jageshwar Dham", "Binsar Wildlife Sanctuary"]
   },
-    {
-    id: "almoratown",
-    name: "Almora-Town",
-    geojsonName: "Almora-Town",
-    headquarters: "Almora",
-    region: "Kumaon",
-    area: 3139,
-    population: 622506,
-    literacyRate: 80.47,
-    sexRatio: 1139,
-    gisUrl: "https://almora-town.onrender.com/",
-    githubUrl: "https://github.com/RawatGitLab/District-Almora-Town",
-    centroid: [29.5971, 79.6591],
-    description: "Known for its rich cultural heritage, unique handicrafts, delicious sweets like Bal Mithai, and panoramic views of the Himalayas. It is a major cultural hub of the Kumaon region.",
-    keyFeatures: ["Kasar Devi Temple", "Katarmal Sun Temple", "Jageshwar Dham", "Binsar Wildlife Sanctuary"]
-  },
   {
     id: "bageshwar",
     name: "Bageshwar",
