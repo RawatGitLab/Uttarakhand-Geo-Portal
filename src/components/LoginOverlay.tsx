@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Lock, User, KeyRound, AlertCircle, ShieldCheck, Eye, EyeOff, Compass } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import ucostLogo from "../assets/logos/UCOST-Logo.jpg";
+import ssjLogo from "../assets/logos/SSJ-Logo.jpg";
+import uttarakhandLogo from "../assets/logos/Uttarakhand-Logo.jpg";
+import govIndiaLogo from "../assets/logos/Government of India-Logo.jpg";
 
 interface LoginOverlayProps {
   onLoginSuccess: () => void;
@@ -62,8 +66,34 @@ export function LoginOverlay({ onLoginSuccess }: LoginOverlayProps) {
         {/* Brand Header */}
         <div className="text-center mb-6">
           <div className="inline-flex p-3 bg-indigo-600/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 rounded-2xl mb-3 shadow-inner">
-            <Compass className="w-8 h-8 animate-spin-slow" />
+            <div className="flex items-center justify-center gap-3 sm:gap-4 mb-5 p-6 bg-white/95 dark:bg-slate-800/95 rounded-xl border border-slate-200/80 dark:border-slate-700/80 shadow-sm">
+              <img
+                src={ucostLogo}
+                alt="UCOST"
+                title="UCOST"
+                className="h-14 sm:h-16 w-auto max-w-[70px] sm:max-w-[85px] object-contain rounded transition-transform hover:scale-105"
+              />
+              <img
+                src={ssjLogo}
+                alt="SSJ-University-Almora"
+                title="SSJ-University-Almora"
+                className="h-14 sm:h-16 w-auto max-w-[70px] sm:max-w-[85px] object-contain rounded transition-transform hover:scale-105"
+              />
+              <img
+                src={uttarakhandLogo}
+                alt="Government of Uttarakhand"
+                title="Government of Uttarakhand"
+                className="h-14 sm:h-16 w-auto max-w-[70px] sm:max-w-[85px] object-contain rounded transition-transform hover:scale-105"
+              />
+              <img
+                src={govIndiaLogo}
+                alt="Government of India"
+                title="Government of India"
+                className="h-14 sm:h-16 w-auto max-w-[70px] sm:max-w-[85px] object-contain rounded transition-transform hover:scale-105"
+              />
+            </div>
           </div>
+          
           <h2 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight flex items-center justify-center gap-1.5 uppercase font-sans">
             <ShieldCheck className="w-5 h-5 text-emerald-500" />
             UK Geoportal
