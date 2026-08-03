@@ -38,8 +38,8 @@ router.post("/login", loginLimiter, async (req: Request, res: Response) => {
     const sessionSecret = "uttarakhand_gis_portal_secure_jwt_secret_token_signature_key";
 
     // Optional process.env fallbacks for alternate usernames and passwords
-    const fallbackUsername = process.env.FALLBACK_USERNAME || "ukgeoportal";
-    const fallbackPassword = process.env.FALLBACK_PASSWORD || "ucostnrdms@321";
+    const fallbackUsername = process.env.FALLBACK_USERNAME;
+    const fallbackPassword = process.env.FALLBACK_PASSWORD;
 
     if (!expectedUsername || !expectedHash) {
       console.error("Missing critical authentication environment variables in server process.env.");
