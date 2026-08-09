@@ -1,4 +1,4 @@
-# 🗻 Uttarakhand GEO-Portal...
+# 🗻 Uttarakhand GEO-Portal
 
 <div align="center">
 
@@ -124,7 +124,7 @@ This portal is the 🧠 "brain" that sits on top of 13 sibling district apps, ea
 
 ```
 🏛️ Uttarakhand-Geo-Portal   (this repo — the aggregator, on Netlify ☁️)
-   └── 🔗 District-Almora            (Render 🚂)
+   └── 🔗 District-Almora            (Railway 🚂)
    └── 🔗 District-Bageshwar         (Render 🎨)
    └── 🔗 District-Chamoli           (Render 🎨)
    └── 🔗 ... 10 more district apps  (Render 🎨)

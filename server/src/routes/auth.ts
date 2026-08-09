@@ -2,18 +2,8 @@ import { Router, Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { z } from "zod";
-import rateLimit from "express-rate-limit";
 
 const router = Router();
-
-// Rate limiter for login route to prevent brute-force attacks
-const loginLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5, // Limit each IP to 5 login requests per window
-  message: { error: "Too many login attempts from this IP, please try again after 15 minutes." },
-  standardHeaders: true,
-  legacyHeaders: false,
-});
 
 // Zod validation schema for login input
 const loginSchema = z.object({
@@ -22,7 +12,7 @@ const loginSchema = z.object({
 });
 
 // POST /api/auth/login
-router.post("/login", loginLimiter, async (req: Request, res: Response) => {
+router.post("/login", async (req: Request, res: Response) => {
   try {
     // 1. Validate payload with zod
     const result = loginSchema.safeParse(req.body);

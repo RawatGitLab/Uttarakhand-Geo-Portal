@@ -21,7 +21,7 @@ if (fs.existsSync(envPath)) {
 async function startServer() {
   const app = express();
 
-  // Enable trust proxy for rate limiting behind reverse proxies (like Render, Cloud Run, etc.)
+  // Enable trust proxy behind reverse proxies (like Render, Cloud Run, etc.)
   app.set("trust proxy", 1);
 
   // 1. Helmet headers configuration to secure the app without breaking static assets & maps (like Leaflet tiles)
