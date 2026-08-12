@@ -189,7 +189,7 @@ Uttarakhand-Geo-Portal/
         ├── 🧾 districtsData.ts      # Static census dataset
         └── 🌍 uttarakhand_district.json  # District boundary GeoJSON
 ---
-
+```
 ## 🌱 Roadmap Ideas
 
 - [ ] 🔐 Replace client-side login with real auth
