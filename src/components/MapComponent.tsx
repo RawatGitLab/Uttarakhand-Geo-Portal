@@ -32,8 +32,8 @@ const BASEMAPS = [
   {
     id: "street",
     name: "OSM Street",
-    url: () => "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    url: () => "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles style by <a href="https://www.hotosm.org/">Humanitarian OpenStreetMap Team</a> hosted by <a href="https://openstreetmap.fr/">OSM France</a>',
     thumbnail: "bg-gradient-to-tr from-blue-100 via-slate-300 to-amber-100"
   },
   {
@@ -91,7 +91,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   const tileLayerRef = useRef<L.TileLayer | null>(null);
   const geojsonLayerRef = useRef<L.GeoJSON | null>(null);
 
-  const [activeBasemap, setActiveBasemap] = useState<string>("street");
+  const [activeBasemap, setActiveBasemap] = useState<string>("satellite");
   const [isGalleryOpen, setIsGalleryOpen] = useState<boolean>(false);
 
   // Zoom map to the bounds of the Uttarakhand GIS layer
