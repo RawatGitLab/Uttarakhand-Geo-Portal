@@ -183,8 +183,7 @@ Uttarakhand-Geo-Portal/
     │   ├── 🗺️ MapComponent.tsx      # Leaflet map + choropleth
     │   ├── 📇 DistrictList.tsx      # Searchable district directory
     │   ├── 📊 RightPanel.tsx        # Analytics + profile + GIS embed
-    │   ├── 📑 ReportModal.tsx       # Comparison + CSV/PDF export
-    │   └── 🔐 LoginOverlay.tsx      # Auth gate
+    │   └── 📑 ReportModal.tsx       # Comparison + CSV/PDF export
     └── 📂 data/
         ├── 🧾 districtsData.ts      # Static census dataset
         └── 🌍 uttarakhand_district.json  # District boundary GeoJSON
@@ -192,7 +191,6 @@ Uttarakhand-Geo-Portal/
 ```
 ## 🌱 Roadmap Ideas
 
-- [ ] 🔐 Replace client-side login with real auth
 - [ ] 🗃️ Move district data to a live data source instead of a static file
 - [ ] 🎯 Add "fly to district" map animation on selection
 - [ ] 🧪 Add automated tests

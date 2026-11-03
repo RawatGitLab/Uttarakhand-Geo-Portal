@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { 
   Sun, Moon, Layers, FileSpreadsheet, Sparkles, TrendingUp, Compass, HelpCircle, ArrowRight,
-  Globe, ChevronDown, ExternalLink, LogOut
+  Globe, ChevronDown, ExternalLink
 } from "lucide-react";
 import { DistrictDetail, districtsData, stateTotals } from "./data/districtsData";
 import { MapComponent } from "./components/MapComponent";
 import { DistrictList } from "./components/DistrictList";
 import { RightPanel } from "./components/RightPanel";
 import { ReportModal } from "./components/ReportModal";
-import { LoginOverlay } from "./components/LoginOverlay";
 
 export default function App() {
   const [selectedDistrict, setSelectedDistrict] = useState<DistrictDetail | null>(null);
@@ -18,42 +17,6 @@ export default function App() {
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [isGisDropdownOpen, setIsGisDropdownOpen] = useState(false);
   const [gisSearchQuery, setGisSearchQuery] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [isCheckingSession, setIsCheckingSession] = useState<boolean>(true);
-
-  // Verify session on mount
-  useEffect(() => {
-    const checkSession = async () => {
-      try {
-        const response = await fetch("/api/auth/session");
-        const data = await response.json();
-        if (data.authenticated) {
-          setIsLoggedIn(true);
-        } else {
-          setIsLoggedIn(false);
-        }
-      } catch (err) {
-        console.error("Session check failed:", err);
-        setIsLoggedIn(false);
-      } finally {
-        setIsCheckingSession(false);
-      }
-    };
-    checkSession();
-  }, []);
-
-  const handleLoginSuccess = () => {
-    setIsLoggedIn(true);
-  };
-
-  const handleLogout = async () => {
-    try {
-      await fetch("/api/auth/logout", { method: "POST" });
-    } catch (err) {
-      console.error("Logout request failed:", err);
-    }
-    setIsLoggedIn(false);
-  };
 
   // Sync dark theme class on document element
   useEffect(() => {
@@ -251,18 +214,6 @@ export default function App() {
             {theme === "light" ? <Moon className="w-3.5 h-3.5" /> : <Sun className="w-3.5 h-3.5" />}
           </button>
 
-          {/* Secure Logout Button */}
-          {isLoggedIn && (
-            <button
-              onClick={handleLogout}
-              className="px-2.5 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-500/20 rounded-lg transition-all flex items-center gap-1.5 text-xs font-semibold cursor-pointer h-8"
-              title="Secure Logout"
-            >
-              <LogOut className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Logout</span>
-            </button>
-          )}
-
         </div>
       </header>
 
@@ -311,27 +262,6 @@ export default function App() {
         onToggleComparison={handleToggleComparison}
         onResetComparison={handleResetComparison}
       />
-
-      {/* Transparent Secure Authorization Overlay */}
-      {!isCheckingSession && !isLoggedIn && (
-        <LoginOverlay onLoginSuccess={handleLoginSuccess} />
-      )}
-
-      {isCheckingSession && (
-        <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
-          <div className="flex flex-col items-center gap-4 text-center">
-            <div className="p-4 bg-gradient-to-tr from-sky-500 to-indigo-600 rounded-2xl text-white shadow-xl shadow-sky-500/20">
-              <Compass className="w-8 h-8 animate-spin-slow text-white" />
-            </div>
-            <div>
-              <p className="text-xs font-bold text-slate-900 dark:text-slate-50 uppercase tracking-widest font-sans">
-                UK Geoportal
-              </p>
-              <p className="text-[10px] text-slate-400 font-medium mt-1">Verifying Secure Session...</p>
-            </div>
-          </div>
-        </div>
-      )}
 
     </div>
   );

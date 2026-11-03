@@ -91,7 +91,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   const tileLayerRef = useRef<L.TileLayer | null>(null);
   const geojsonLayerRef = useRef<L.GeoJSON | null>(null);
 
-  const [activeBasemap, setActiveBasemap] = useState<string>("satellite");
+  const [activeBasemap, setActiveBasemap] = useState<string>("terrain");
   const [isGalleryOpen, setIsGalleryOpen] = useState<boolean>(false);
 
   // Zoom map to the bounds of the Uttarakhand GIS layer

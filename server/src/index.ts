@@ -1,8 +1,6 @@
 import express from "express";
 import path from "path";
-import cookieParser from "cookie-parser";
 import helmet from "helmet";
-import authRoutes from "./routes/auth";
 import dotenv from "dotenv";
 import fs from "fs";
 
@@ -35,13 +33,7 @@ async function startServer() {
   app.use(express.json({ limit: "10kb" }));
   app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 
-  // 3. Cookie Parser
-  app.use(cookieParser());
-
-  // 4. Mount API Routes
-  app.use("/api/auth", authRoutes);
-
-  // 5. Serve Static Assets and SPA Fallback
+  // 3. Serve Static Assets and SPA Fallback
   if (process.env.NODE_ENV !== "production") {
     // Dynamic import to avoid loading Vite in production
     const { createServer: createViteServer } = await import("vite");
